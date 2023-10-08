@@ -20,7 +20,7 @@ const styles = css`
 `
 
 export default function UserList() {
-  const { READ, REMOVE_SELECTED } = userActions;
+  const { READ, DELETE_SELECTED } = userActions;
   const { userList, userListDispatch, setEditingUser } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState("");
@@ -53,12 +53,12 @@ export default function UserList() {
     setEditingUser(user);
   }
 
-  const handleRemoveSelected = (id) => () => {
+  const handleDeleteSelected = (id) => () => {
     setIsModalOpen(true);
     setSelectedId(id)
   }
 
-  const handleRemoveConfirmSelected = async () => {
+  const handleDeleteConfirmSelected = async () => {
     try {
       if(!selectedId) {
         console.error("No selected user ID to remove.");
@@ -71,7 +71,7 @@ export default function UserList() {
         throw new Error("Failed to remove selected user");
       }
 
-      userListDispatch({type: REMOVE_SELECTED, selectedId});
+      userListDispatch({type: DELETE_SELECTED, selectedId});
       setIsModalOpen(false);
 
       console.log(res, selectedId);
@@ -94,7 +94,7 @@ export default function UserList() {
             name={user.name} 
             surname={user.surname}
             age={user.age}
-            onRemove={handleRemoveSelected(user._id)}
+            onRemove={handleDeleteSelected(user._id)}
             onEdit={handleEditSelected(user)}
           />
         ))}
@@ -103,7 +103,7 @@ export default function UserList() {
         <ModalPortal>
           <Remove 
             title="Remove selected user?"
-            onRemove={handleRemoveConfirmSelected} 
+            onRemove={handleDeleteConfirmSelected} 
             onCancel={handleCancelModal}
           />
         </ModalPortal>

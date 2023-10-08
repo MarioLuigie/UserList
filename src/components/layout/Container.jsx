@@ -23,7 +23,7 @@ export default function Container() {
   
   return (
     <div css={styles(width, minWidth, maxWidth)}>
-      <Header title="User List" />
+      <Header title="Your Places" />
       <Main />
       <Footer signature="ARWcode 2023" />
     </div>

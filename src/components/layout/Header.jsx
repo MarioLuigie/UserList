@@ -8,12 +8,16 @@ const styles = css`
   justify-content: center;
   align-items: center;
   height: ${header.height}px;
-  background-color: #d1d1d1;
+  background-color: #181818;
 
   .title {
-    font-size: 55px;
-    color: #f3f3f3;
-    text-shadow: #1f1f1f52 0 0 14px;
+    font-size: 65px;
+    color: #cecece;
+
+    span {
+      font-weight: 100;
+      padding-left: 10px;
+    }
   }
 `
 
@@ -22,7 +26,7 @@ export default function Header({
 }) {
   return (
     <div css={styles}>
-      <h1 className='title'>{title}</h1>
+      <h1 className='title'>{title}<span>&reg;</span></h1>
     </div>
   )
 }

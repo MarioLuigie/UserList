@@ -17,15 +17,15 @@ const styles = css`
 
 export default function Controls() {
   const url = "https://places-arw.vercel.app/api/people";
-  const { REMOVE_ALL } = userActions;
+  const { DELETE_ALL } = userActions;
   const { userList, userListDispatch } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleRemoveAll = () => {
+  const handleDeleteAll = () => {
     setIsModalOpen(true);
   }
 
-  const handleRemoveConfirmAll = async () => {
+  const handleDeleteConfirmAll = async () => {
     try {
       const res = await fetch(url, {method: "DELETE"});
 
@@ -33,7 +33,7 @@ export default function Controls() {
         throw new Error("Failed to delete users.");
       }
   
-      userListDispatch({type: REMOVE_ALL});
+      userListDispatch({type: DELETE_ALL});
       handleCancelModal();
       console.log(res);
     } catch (error) {
@@ -48,13 +48,13 @@ export default function Controls() {
   return (
     <>
       <div css={styles}>
-        <Button label="Remove All" onHandle={handleRemoveAll} />
+        <Button label="Remove All" onHandle={handleDeleteAll} />
       </div>
       {(isModalOpen && userList.length > 0) && 
         <ModalPortal>
           <Remove 
             title="Remove all users completely?"
-            onRemove={handleRemoveConfirmAll} 
+            onRemove={handleDeleteConfirmAll} 
             onCancel={handleCancelModal}
           />
         </ModalPortal>

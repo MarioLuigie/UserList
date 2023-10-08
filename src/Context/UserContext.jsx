@@ -10,23 +10,27 @@ export default function UserProvider({ children }) {
 
   const userReducer = (userList, action) => {
     const {
-      ADD, 
+      CREATE, 
       READ, 
       UPDATE, 
-      REMOVE_SELECTED, 
-      REMOVE_ALL 
+      DELETE_SELECTED, 
+      DELETE_ALL 
     } = userActions;
 
     switch(action.type) {
-      case ADD:
+      case CREATE:
         return [...userList, action.user];
       case READ:
         return action.users;
       case UPDATE:
-        return;
-      case REMOVE_SELECTED:
+        return userList.map(user => (
+          user._id === action.user._id 
+            ? {...user, ...action.user}
+            : user
+        ));
+      case DELETE_SELECTED:
         return userList.filter(user => user._id !== action.selectedId);
-      case REMOVE_ALL:
+      case DELETE_ALL:
         return [];
       default:
         return userList;

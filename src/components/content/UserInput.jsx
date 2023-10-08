@@ -29,8 +29,6 @@ const styles = css`
 `
 
 export default function UserInput() {
-  const url = "https://places-arw.vercel.app/api/people";
-
   const initFormData = {
     name: "",
     surname: "",
@@ -39,27 +37,28 @@ export default function UserInput() {
 
   const { userListDispatch, editingUser, setEditingUser } = useUserContext();
   const [formData, setFormData] = useState(initFormData);
-  const { ADD } = userActions;
+  const { CREATE, UPDATE } = userActions;
+
+  const url = "https://places-arw.vercel.app/api/people";
 
   const handleCancel= () => {
     setFormData(initFormData);
     setEditingUser(false);
   }
 
-  const handleChangeInput = (evt) => {
+  const handleChangeForm = (evt) => {
     setFormData({
       ...formData,
       [evt.target.name]: evt.target.value
     });
   }
 
-  const handleAddUser = async () => {
+  const handleCreateUser = async () => {
     const { name, surname, age } = formData;
-
     const newUser = { name, surname, age };
 
     try {
-      const res = await fetch(url,{
+      const res = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,16 +67,16 @@ export default function UserInput() {
       });
 
       if(!res.ok) {
-        throw new Error("Failed to add user");
+        throw new Error("Failed to add user.");
       }
 
       const user = await res.json();
 
-      userListDispatch({ type: ADD, user });
+      userListDispatch({ type: CREATE, user });
 
       setFormData(initFormData);
 
-      console.log("User added successfully", res, user);
+      console.log("User added successfully.", res, user);
 
     } catch (error) {
       console.error("Error while adding user:", error);
@@ -86,17 +85,42 @@ export default function UserInput() {
 
   useEffect(() => {
     if(editingUser) {
-      setFormData({
-        name: editingUser.name,
-        surname: editingUser.surname,
-        age: editingUser.age
-      });
+      const { name, surname, age, _id } = editingUser;
+      setFormData({ name, surname, age, _id });
     }
   }, [editingUser]);
 
-  const handleUpdateSelected = () => {
-    console.log("User updated", editingUser._id);
-    setEditingUser(false);//Turn off update mode
+  const handleUpdateSelected = async () => {
+    try {
+      if(!editingUser) {
+        console.error("No selected user ID to update.");
+        return;
+      }
+
+      const urlId = `https://places-arw.vercel.app/api/people/${editingUser._id}`;
+
+      const res = await fetch(urlId, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if(!res.ok) {
+        throw new Error("Failed to update user.");
+      }
+
+      const user = await res.json();
+
+      // console.log(data);
+      userListDispatch({type: UPDATE, user});
+      setFormData(initFormData);
+      setEditingUser(null);//Turn off update mode
+      
+    } catch (error) {
+      console.error("Error while updating selected user.")
+    }
   }
 
   return (
@@ -107,7 +131,7 @@ export default function UserInput() {
         name="name"
         type="text" 
         placeholder="Insert name"
-        onChange={handleChangeInput}
+        onChange={handleChangeForm}
         value={formData.name}
       /> 
       <Input 
@@ -116,7 +140,7 @@ export default function UserInput() {
         name="surname" 
         type="text" 
         placeholder="Insert surname" 
-        onChange={handleChangeInput}
+        onChange={handleChangeForm}
         value={formData.surname}
       /> 
       <Input 
@@ -125,12 +149,12 @@ export default function UserInput() {
         name="age"
         type="number" 
         placeholder="Insert age" 
-        onChange={handleChangeInput}
+        onChange={handleChangeForm}
         value={formData.age}
       /> 
       {!editingUser && <div className='buttons'>
         <Button label="cancel" onHandle={handleCancel}/> 
-        <Button label="Add" onHandle={handleAddUser} />
+        <Button label="Add" onHandle={handleCreateUser} />
       </div>}
       {editingUser && <div className='buttons'>
         <Button label="cancel" onHandle={handleCancel}/> 
