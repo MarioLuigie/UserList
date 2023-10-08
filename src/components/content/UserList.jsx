@@ -24,6 +24,7 @@ export default function UserList() {
   const { userList, userListDispatch } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState("");
+  const [editingUser, setEditingUser] = useState(null);
 
   const url = "https://places-arw.vercel.app/api/people";
   const urlId = `https://places-arw.vercel.app/api/people/${selectedId}`;
@@ -47,6 +48,15 @@ export default function UserList() {
   };
 
   useEffect(() => {fetchData()}, []); 
+
+  const handleEditSelected = (user) => () => {
+    console.log("Editing user:", user._id);
+    setEditingUser(user);
+  }
+
+  const handleUpdateSelected = () => {
+
+  }
 
   const handleRemoveSelected = (id) => () => {
     setIsModalOpen(true);
@@ -90,6 +100,7 @@ export default function UserList() {
             surname={user.surname}
             age={user.age}
             onRemove={handleRemoveSelected(user._id)}
+            onEdit={handleEditSelected(user)}
           />
         ))}
       </div>

@@ -77,7 +77,8 @@ export default function User({
   name,
   surname,
   age,
-  onRemove
+  onRemove,
+  onEdit
 }) {
 
   return (
@@ -85,7 +86,7 @@ export default function User({
       <div className='controls'>
         <div className='id'><p>ID: {id}</p></div>
         <div className='icons'>
-          <div>
+          <div onClick={onEdit}>
             <FontAwesomeIcon icon={faPenToSquare} />
           </div>
           <div onClick={onRemove}>

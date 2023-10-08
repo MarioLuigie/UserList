@@ -1,9 +1,9 @@
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { useState } from 'react';
 
 import { useUserContext } from '../../Context/UserContext';
 import { userActions } from '../../constans/actions';
-import { useState } from 'react';
 import ModalPortal from '../Modals/ModalPortal';
 import Remove from '../Modals/Remove';
 import Button from "../UI/Button";
@@ -13,7 +13,6 @@ const styles = css`
   display: flex;
   justify-content: center;
   padding: 30px 0;
-
 `
 
 export default function Controls() {
@@ -28,10 +27,10 @@ export default function Controls() {
 
   const handleRemoveConfirmAll = async () => {
     try {
-      const res = await fetch(url, {method: "DELETE"})
+      const res = await fetch(url, {method: "DELETE"});
 
       if(!res.ok) {
-        throw new Error("Failed to delete users.")
+        throw new Error("Failed to delete users.");
       }
   
       userListDispatch({type: REMOVE_ALL});
