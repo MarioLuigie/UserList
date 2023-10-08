@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 
 import { userActions } from "../constans/actions";
 
@@ -6,6 +6,8 @@ export const UserContext = createContext();
 export const useUserContext = () => useContext(UserContext);
 
 export default function UserProvider({ children }) {
+  const [editingUser, setEditingUser] = useState(null);
+
   const userReducer = (userList, action) => {
     const {
       ADD, 
@@ -35,7 +37,9 @@ export default function UserProvider({ children }) {
 
   const providerValues = {
     userList,
-    userListDispatch
+    userListDispatch,
+    editingUser, 
+    setEditingUser
   }
 
   return (

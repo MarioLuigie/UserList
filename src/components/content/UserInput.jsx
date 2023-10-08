@@ -1,5 +1,6 @@
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { useEffect } from "react";
 
 import { useUserContext } from '../../Context/UserContext';
 import Button from "../UI/Button";
@@ -36,12 +37,13 @@ export default function UserInput() {
     age: ""
   }
 
-  const { userListDispatch } = useUserContext();
+  const { userListDispatch, editingUser, setEditingUser } = useUserContext();
   const [formData, setFormData] = useState(initFormData);
   const { ADD } = userActions;
 
   const handleCancel= () => {
     setFormData(initFormData);
+    setEditingUser(false);
   }
 
   const handleChangeInput = (evt) => {
@@ -54,11 +56,7 @@ export default function UserInput() {
   const handleAddUser = async () => {
     const { name, surname, age } = formData;
 
-    const newUser = {
-      name,
-      surname,
-      age
-    }
+    const newUser = { name, surname, age };
 
     try {
       const res = await fetch(url,{
@@ -77,13 +75,28 @@ export default function UserInput() {
 
       userListDispatch({ type: ADD, user });
 
-      setFormData(initFormData)
+      setFormData(initFormData);
 
       console.log("User added successfully", res, user);
 
     } catch (error) {
       console.error("Error while adding user:", error);
     }
+  }
+
+  useEffect(() => {
+    if(editingUser) {
+      setFormData({
+        name: editingUser.name,
+        surname: editingUser.surname,
+        age: editingUser.age
+      });
+    }
+  }, [editingUser]);
+
+  const handleUpdateSelected = () => {
+    console.log("User updated", editingUser._id);
+    setEditingUser(false);//Turn off update mode
   }
 
   return (
@@ -115,10 +128,14 @@ export default function UserInput() {
         onChange={handleChangeInput}
         value={formData.age}
       /> 
-      <div className='buttons'>
+      {!editingUser && <div className='buttons'>
         <Button label="cancel" onHandle={handleCancel}/> 
         <Button label="Add" onHandle={handleAddUser} />
-      </div>
+      </div>}
+      {editingUser && <div className='buttons'>
+        <Button label="cancel" onHandle={handleCancel}/> 
+        <Button label="Update" onHandle={handleUpdateSelected} />
+      </div>}
     </div>
   )
 }

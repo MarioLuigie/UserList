@@ -21,10 +21,9 @@ const styles = css`
 
 export default function UserList() {
   const { READ, REMOVE_SELECTED } = userActions;
-  const { userList, userListDispatch } = useUserContext();
+  const { userList, userListDispatch, setEditingUser } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState("");
-  const [editingUser, setEditingUser] = useState(null);
 
   const url = "https://places-arw.vercel.app/api/people";
   const urlId = `https://places-arw.vercel.app/api/people/${selectedId}`;
@@ -52,10 +51,6 @@ export default function UserList() {
   const handleEditSelected = (user) => () => {
     console.log("Editing user:", user._id);
     setEditingUser(user);
-  }
-
-  const handleUpdateSelected = () => {
-
   }
 
   const handleRemoveSelected = (id) => () => {
