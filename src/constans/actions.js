@@ -1,0 +1,7 @@
+export const userActions = {
+  ADD: "ADD",
+  READ: "READ",
+  UPDATE: "UPDATE",
+  REMOVE_SELECTED: "REMOVE_SELECTED",
+  REMOVE_ALL: "REMOVE_ALL"
+}
