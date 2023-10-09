@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer, useState } from "react";
 
-import { userActions } from "../constans/actions";
+import { typeActions } from "../constans/typeActions";
 
 export const UserContext = createContext();
 export const useUserContext = () => useContext(UserContext);
@@ -15,7 +15,7 @@ export default function UserProvider({ children }) {
       UPDATE, 
       DELETE_SELECTED, 
       DELETE_ALL 
-    } = userActions;
+    } = typeActions;
 
     switch(action.type) {
       case CREATE:

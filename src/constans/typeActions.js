@@ -1,4 +1,4 @@
-export const userActions = {
+export const typeActions = {
   CREATE: "CREATE",
   READ: "READ",
   UPDATE: "UPDATE",
