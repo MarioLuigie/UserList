@@ -101,15 +101,14 @@ export default function UserInput() {
         onChange={handleChangeForm}
         value={formData.age}
       /> 
-      < div className='buttons'>
+      <div className='buttons'>
         <Button label="cancel" onHandle={handleCancel}/> 
         {!editingUser ? (
-           <Button label="Add" onHandle={handleCreateUser} />
+          <Button label="Add" onHandle={handleCreateUser} />
         ) : (
           <Button label="Update" onHandle={handleUpdateSelected} />
-        )
-        }
+        )}
       </div>
-  </div>
+    </div>
   )
 }
