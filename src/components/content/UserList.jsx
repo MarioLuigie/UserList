@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ModalPortal from '../Modals/ModalPortal';
 import Remove from '../Modals/Remove';
 import { useUserContext } from '../../Context/UserContext';
-import { readUser, deleteUser } from '../../actions/userActions';
+import * as actions from '../../actions/userActions';
 import User from "./User";
 
 const styles = css`
@@ -20,29 +20,37 @@ const styles = css`
 `
 
 export default function UserList() {
-  const { userList, userListDispatch, setEditingUser } = useUserContext();
+  const { userList, userListDispatch, setEditingUser, setDataStatus } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState("");
 
+  //Automatic fetch datas from server white first render component
   useEffect(() => async () => {
-    await readUser(userListDispatch);
+    await actions.readUser(userListDispatch);
   }, []); 
 
+  //Set user on editingUser state 
   const handleEditSelected = (user) => () => {
     setEditingUser(user);
   }
 
+  //Open modal dialog to confirm delete selected user
+  //Set selectedId state item to delete
   const handleDeleteSelected = (id) => () => {
     setIsModalOpen(true);
     setSelectedId(id);
     console.log(id);
   }
 
+
   const handleDeleteConfirmSelected = async () => {
-    await deleteUser(selectedId, userListDispatch);
+    setDataStatus("PENDING");
+    await actions.deleteUser(selectedId, userListDispatch);
+    setDataStatus("SUCCESS");
     setIsModalOpen(false);
   }
 
+  //Close modal dialog window to confirm 
   const handleCancelModal = () => {
     setIsModalOpen(false);
   }

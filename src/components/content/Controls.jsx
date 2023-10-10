@@ -16,7 +16,7 @@ const styles = css`
 `
 
 export default function Controls() {
-  const { userList, userListDispatch } = useUserContext();
+  const { userList, userListDispatch, setDataStatus } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCancelModal = () => {
@@ -28,7 +28,9 @@ export default function Controls() {
   }
 
   const handleDeleteConfirmAll = async () => {
-    await deleteAll(userListDispatch)
+    setDataStatus("PENDING");
+    await deleteAll(userListDispatch);
+    setDataStatus("SUCCESS");
     handleCancelModal();
   }
 

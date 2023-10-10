@@ -1,8 +1,8 @@
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect, useState } from "react";
 
 import Container from "./layout/Container";
+import DataStatusLabel from './Modals/DataStatusLabel';
 
 const styles = css`
   display: flex;
@@ -11,10 +11,10 @@ const styles = css`
 
 export default function App() {
 
-
   return (
     <div css={styles}>
       <Container />
+      <DataStatusLabel />
     </div>
   )
 }

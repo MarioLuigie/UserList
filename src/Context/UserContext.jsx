@@ -1,12 +1,13 @@
 import { createContext, useContext, useReducer, useState } from "react";
 
-import { typeActions } from "../constans/typeActions";
+import { actionTypes } from "../constans/actionTypes";
 
 export const UserContext = createContext();
 export const useUserContext = () => useContext(UserContext);
 
 export default function UserProvider({ children }) {
   const [editingUser, setEditingUser] = useState(null);
+  const [dataStatus, setDataStatus] = useState("SUCCESS");
 
   const userReducer = (userList, action) => {
     const {
@@ -15,7 +16,7 @@ export default function UserProvider({ children }) {
       UPDATE, 
       DELETE_SELECTED, 
       DELETE_ALL 
-    } = typeActions;
+    } = actionTypes;
 
     switch(action.type) {
       case CREATE:
@@ -43,7 +44,9 @@ export default function UserProvider({ children }) {
     userList,
     userListDispatch,
     editingUser, 
-    setEditingUser
+    setEditingUser,
+    dataStatus, 
+    setDataStatus
   }
 
   return (

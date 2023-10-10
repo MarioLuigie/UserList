@@ -36,14 +36,22 @@ export default function UserInput() {
     age: ""
   }
 
-  const { userListDispatch, editingUser, setEditingUser } = useUserContext();
+  const { 
+    userListDispatch, 
+    editingUser, 
+    setEditingUser,
+    setDataStatus
+  } = useUserContext();
+
   const [formData, setFormData] = useState(initFormData);
 
+  //Reset form state with all inputs and editingUser state
   const handleCancel= () => {
     setFormData(initFormData);
     setEditingUser(false);
   }
 
+  //Listener for all inputs in form
   const handleChangeForm = (evt) => {
     setFormData({
       ...formData,
@@ -51,14 +59,18 @@ export default function UserInput() {
     });
   }
 
+  //Create a new user and send on server, fetch from server and send to reducer
   const handleCreateUser = async () => {
     const { name, surname, age } = formData;
     const newUser = { name, surname, age };
-
+    setDataStatus("PENDING");
     await createUser(newUser, userListDispatch);
+    setDataStatus("SUCCESS");
     setFormData(initFormData);
   }
 
+  //Set values from editing user to form inputs value 
+  //always while change editingUser state (handleEditSelected from UserList.jsx)
   useEffect(() => {
     if(editingUser) {
       const { name, surname, age, _id } = editingUser;
@@ -66,8 +78,12 @@ export default function UserInput() {
     }
   }, [editingUser]);
 
+  //Send edited user (actual form) to server, fetch response with updateted user
+  //send response user to reducer, reset form state, reset editing user state
   const handleUpdateSelected = async () => {
+    setDataStatus("PENDING");
     await updateUser(formData, userListDispatch, editingUser);
+    setDataStatus("SUCCESS");
     setFormData(initFormData);
     setEditingUser(null);//Turn off update mode
   }
