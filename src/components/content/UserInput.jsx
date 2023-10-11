@@ -63,9 +63,15 @@ export default function UserInput() {
   const handleCreateUser = async () => {
     const { name, surname, age } = formData;
     const newUser = { name, surname, age };
+
     setDataStatus("PENDING");
+
     const isStatusOk = await createUser(newUser, userListDispatch);
-    isStatusOk ? setDataStatus("SUCCESS") : setDataStatus("ERROR");
+
+    isStatusOk 
+      ? setDataStatus("SUCCESS") 
+      : setDataStatus("ERROR");
+
     setFormData(initFormData);
   }
 

@@ -8,11 +8,12 @@ import ReactDOM from "react-dom";
 import { useUserContext } from '../../Context/UserContext';
 import { dataStatuses as status } from '../../constans/dataStatuses';
 
-const styles = (data, translate) => css` 
+const styles = (data, translate, isOnTop) => css` 
   width: 100%;
   position: fixed;
-  top: 0;
+  top: ${isOnTop ? 0 : "auto"};
   left: 0;
+  bottom: ${isOnTop ? "auto" : 0};
   z-index: 3;
   display: flex;
   justify-content: center;
@@ -46,9 +47,18 @@ const styles = (data, translate) => css`
 `
 
 export default function DataStatusLabel() {
-  const [translate, setTranslate] = useState("");
-  const { dataStatus, setDataStatus } = useUserContext();
+  //Notification location control function using one variable
+  const isOnTop = true;
+  const localNotifications = {
+    start: "translate(0, 0)",
+    onTop: "translate(0, -400px)",
+    onBottom: "translate(0, 400px)"
+  }
+  //Object with properties dependent on dataStatus state for css and jsx
   let data = null;
+
+  const [translate, setTranslate] = useState("");
+  const { dataStatus } = useUserContext();
 
   //Object with styles and datas for notification
   const statusesTypes = {
@@ -78,19 +88,21 @@ export default function DataStatusLabel() {
     }
   }
 
+  //Closing notofication
   const handleCloseStatusData = () => {
-    setTranslate("translate(0, -400px)");
+    setTranslate(isOnTop ? localNotifications.onTop : localNotifications.onBottom);
   }
 
   //UseEffect set translate value
   useEffect(() => {
-      setTranslate("translate(0, 0)");
+      setTranslate(localNotifications.start);
       const timeout = setTimeout(() => {
-        setTranslate("translate(0, -400px)");
+        setTranslate(isOnTop ? localNotifications.onTop : localNotifications.onBottom);
       }, 4000);
       return () => clearTimeout(timeout);
   }, [dataStatus]);
 
+  //Setting the properties of the data object depending on the dataStatus
   switch(dataStatus) {
     case status.SUCCESS:
       data = {...statusesTypes.success};
@@ -106,7 +118,7 @@ export default function DataStatusLabel() {
   }
 
   return ReactDOM.createPortal(
-    <div css={styles(data, translate)}>
+    <div css={styles(data, translate, isOnTop)}>
         <p className='info'>{data.text}</p>
         <button className='close' onClick={handleCloseStatusData}>
           <FontAwesomeIcon icon={faRectangleXmark} />
