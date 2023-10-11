@@ -40,7 +40,8 @@ export default function UserInput() {
     userListDispatch, 
     editingUser, 
     setEditingUser,
-    setDataStatus
+    setDataStatus,
+    changeDataStatus
   } = useUserContext();
 
   const [formData, setFormData] = useState(initFormData);
@@ -64,13 +65,12 @@ export default function UserInput() {
     const { name, surname, age } = formData;
     const newUser = { name, surname, age };
 
-    setDataStatus("PENDING");
+    setDataStatus({status: "PENDING"});
 
-    const isStatusOk = await createUser(newUser, userListDispatch);
-
-    isStatusOk 
-      ? setDataStatus("SUCCESS") 
-      : setDataStatus("ERROR");
+    const isError = await createUser(newUser, userListDispatch);
+    isError 
+      ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
+      : changeDataStatus({status: "SUCCESS"});
 
     setFormData(initFormData);
   }
@@ -87,9 +87,13 @@ export default function UserInput() {
   //Send edited user (actual form) to server, fetch response with updateted user
   //send response user to reducer, reset form state, reset editing user state
   const handleUpdateSelected = async () => {
-    setDataStatus("PENDING");
-    const isStatusOk = await updateUser(formData, userListDispatch, editingUser);
-    isStatusOk ? setDataStatus("SUCCESS") : setDataStatus("ERROR");
+    setDataStatus({status: "PENDING"});
+    const isError = await updateUser(formData, userListDispatch, editingUser);
+
+    isError 
+      ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
+      : changeDataStatus({status: "SUCCESS"});
+
     setFormData(initFormData);
     setEditingUser(null);//Turn off update mode
   }

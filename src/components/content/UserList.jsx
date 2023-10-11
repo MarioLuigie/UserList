@@ -20,7 +20,13 @@ const styles = css`
 `
 
 export default function UserList() {
-  const { userList, userListDispatch, setEditingUser, setDataStatus } = useUserContext();
+  const { 
+    userList, 
+    userListDispatch, 
+    setEditingUser, 
+    setDataStatus,
+    changeDataStatus 
+  } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState("");
 
@@ -42,11 +48,12 @@ export default function UserList() {
     console.log(id);
   }
 
-
   const handleDeleteConfirmSelected = async () => {
-    setDataStatus("PENDING");
-    const isStatusOk = await actions.deleteUser(selectedId, userListDispatch);
-    isStatusOk ? setDataStatus("SUCCESS") : setDataStatus("ERROR")
+    setDataStatus({status: "PENDING"});
+    const isError = await actions.deleteUser(selectedId, userListDispatch);
+    isError
+      ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
+      : changeDataStatus({status: "SUCCESS"});
     setIsModalOpen(false);
   }
 

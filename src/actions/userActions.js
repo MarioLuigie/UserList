@@ -12,11 +12,11 @@ export const createUser = async (newUser, dispatch) => {
 
     const user = await res.json();
     dispatch({ type: action.CREATE, user });
-    return true;
+    return null;
 
   } catch (error) {
     console.error("Error while adding user:", error);
-    return false;
+    return "Failed to add user.";
   }
 }
 
@@ -50,10 +50,12 @@ export const updateUser = async (formData, dispatch, editingUser) => {
     const user = await res.json();
     
     dispatch({type: action.UPDATE, user});
-    return true;
+
+    return null;
+
   } catch (error) {
     console.error("Error while updating selected user.");
-    return false;
+    return "Error while updating selected user.";
   }
 }
 
@@ -67,11 +69,11 @@ export const deleteUser = async (selectedId, dispatch) => {
     }
 
     dispatch({type: action.DELETE_SELECTED, selectedId});
-    return true;
+    return null;
 
   } catch (error) {
     console.error("Error while deletion user:", error);
-    return false;
+    return "Error while deletion user.";
   }
 }
 
@@ -85,10 +87,11 @@ export const deleteAll = async (dispatch) => {
     }
 
     dispatch({type: action.DELETE_ALL});
-    return true;
+
+    return null;
 
   } catch (error) {
     console.error("Error while deletion users:", error);
-    return false;
+    return "Error while deletion users.";
   }
 }

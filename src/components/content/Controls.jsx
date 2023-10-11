@@ -16,7 +16,12 @@ const styles = css`
 `
 
 export default function Controls() {
-  const { userList, userListDispatch, setDataStatus } = useUserContext();
+  const { 
+    userList, 
+    userListDispatch, 
+    setDataStatus,
+    changeDataStatus 
+  } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCancelModal = () => {
@@ -28,9 +33,11 @@ export default function Controls() {
   }
 
   const handleDeleteConfirmAll = async () => {
-    setDataStatus("PENDING");
-    const isStatusOk = await deleteAll(userListDispatch);
-    isStatusOk ? setDataStatus("SUCCESS") : setDataStatus("ERROR")
+    setDataStatus({status: "PENDING"});
+    const isError = await deleteAll(userListDispatch);
+    isError 
+      ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
+      : changeDataStatus({status: "SUCCESS"});
     handleCancelModal();
   }
 

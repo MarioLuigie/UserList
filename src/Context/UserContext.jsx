@@ -6,8 +6,17 @@ export const UserContext = createContext();
 export const useUserContext = () => useContext(UserContext);
 
 export default function UserProvider({ children }) {
+  const initDataStatus = {
+    status: "DEFAULT",
+    msg: "",
+    isAutoHide: true
+  }
   const [editingUser, setEditingUser] = useState(null);
-  const [dataStatus, setDataStatus] = useState("");
+  const [dataStatus, setDataStatus] = useState(initDataStatus);
+
+  const changeDataStatus = (newDataStatus) => {
+    setDataStatus({...initDataStatus, ...newDataStatus});
+  }
 
   const userReducer = (userList, action) => {
     const {
@@ -46,7 +55,8 @@ export default function UserProvider({ children }) {
     editingUser, 
     setEditingUser,
     dataStatus, 
-    setDataStatus
+    setDataStatus,
+    changeDataStatus
   }
 
   return (

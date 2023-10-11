@@ -66,44 +66,51 @@ export default function DataStatusLabel() {
       bgColor: "#64f3a0dd",
       fog: "blur(10px)",
       text: "Action completed successfully!",
-      color: "white"
+      color: "white",
     },
     error: {
       bgColor: "#f06161d8",
       fog: "blur(10px)",
-      text: "The action ended in failure!",
-      color: "white"
+      text: `${dataStatus.msg ? dataStatus.msg : "The action ended in failure!"}`,
+      color: "white",
     },
     pending: {
       bgColor: "#ffad60da",
       fog: "blur(10px)",
       text: "Waiting for result...",
-      color: "white"
+      color: "white",
     },
     default: {
       bgColor: "transparent",
       fog: "none",
       text: "",
-      color: "transparent"
+      color: "transparent",
     }
   }
 
   //Closing notofication
   const handleCloseStatusData = () => {
-    setTranslate(isOnTop ? localNotifications.onTop : localNotifications.onBottom);
+    setTranslate(
+      isOnTop 
+        ? localNotifications.onTop 
+        : localNotifications.onBottom
+    );
   }
 
   //UseEffect set translate value
   useEffect(() => {
       setTranslate(localNotifications.start);
-      const timeout = setTimeout(() => {
-        setTranslate(isOnTop ? localNotifications.onTop : localNotifications.onBottom);
-      }, 4000);
-      return () => clearTimeout(timeout);
+      if(dataStatus.isAutoHide) {
+        const timeout = setTimeout(() => {
+        handleCloseStatusData(); 
+        }, 3000);
+
+        return () => clearTimeout(timeout);
+      }
   }, [dataStatus]);
 
   //Setting the properties of the data object depending on the dataStatus
-  switch(dataStatus) {
+  switch(dataStatus.status) {
     case status.SUCCESS:
       data = {...statusesTypes.success};
       break;
@@ -113,7 +120,7 @@ export default function DataStatusLabel() {
     case status.PENDING:
       data = {...statusesTypes.pending};
       break;
-    default:
+    case status.DEFAULT:
       data = {...statusesTypes.default};
   }
 
