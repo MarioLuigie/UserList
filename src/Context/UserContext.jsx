@@ -7,7 +7,7 @@ export const useUserContext = () => useContext(UserContext);
 
 export default function UserProvider({ children }) {
   const [editingUser, setEditingUser] = useState(null);
-  const [dataStatus, setDataStatus] = useState("SUCCESS");
+  const [dataStatus, setDataStatus] = useState("");
 
   const userReducer = (userList, action) => {
     const {

@@ -45,8 +45,8 @@ export default function UserList() {
 
   const handleDeleteConfirmSelected = async () => {
     setDataStatus("PENDING");
-    await actions.deleteUser(selectedId, userListDispatch);
-    setDataStatus("SUCCESS");
+    const isStatusOk = await actions.deleteUser(selectedId, userListDispatch);
+    isStatusOk ? setDataStatus("SUCCESS") : setDataStatus("ERROR")
     setIsModalOpen(false);
   }
 
@@ -58,17 +58,15 @@ export default function UserList() {
   return (
     <>
       <div css={styles}>
-        {userList.map(user => (
-          <User 
-            key={user._id}
-            id={user._id}
-            name={user.name} 
-            surname={user.surname}
-            age={user.age}
-            onRemove={handleDeleteSelected(user._id)}
-            onEdit={handleEditSelected(user)}
-          />
-        ))}
+        {userList.length !== 0 
+          ? userList.map(user => (
+            <User 
+              key={user._id}
+              user={user}
+              onRemove={handleDeleteSelected(user._id)}
+              onEdit={handleEditSelected(user)}
+            />
+            )) : (<p>No Results...</p>)}
       </div>
       {isModalOpen && 
         <ModalPortal>

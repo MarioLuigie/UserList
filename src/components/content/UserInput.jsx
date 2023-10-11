@@ -64,8 +64,8 @@ export default function UserInput() {
     const { name, surname, age } = formData;
     const newUser = { name, surname, age };
     setDataStatus("PENDING");
-    await createUser(newUser, userListDispatch);
-    setDataStatus("SUCCESS");
+    const isStatusOk = await createUser(newUser, userListDispatch);
+    isStatusOk ? setDataStatus("SUCCESS") : setDataStatus("ERROR");
     setFormData(initFormData);
   }
 
@@ -82,8 +82,8 @@ export default function UserInput() {
   //send response user to reducer, reset form state, reset editing user state
   const handleUpdateSelected = async () => {
     setDataStatus("PENDING");
-    await updateUser(formData, userListDispatch, editingUser);
-    setDataStatus("SUCCESS");
+    const isStatusOk = await updateUser(formData, userListDispatch, editingUser);
+    isStatusOk ? setDataStatus("SUCCESS") : setDataStatus("ERROR");
     setFormData(initFormData);
     setEditingUser(null);//Turn off update mode
   }
@@ -118,7 +118,7 @@ export default function UserInput() {
         value={formData.age}
       /> 
       <div className='buttons'>
-        <Button label="cancel" onHandle={handleCancel}/> 
+        <Button label="Cancel" onHandle={handleCancel}/> 
         {!editingUser ? (
           <Button label="Add" onHandle={handleCreateUser} />
         ) : (

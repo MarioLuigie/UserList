@@ -73,18 +73,15 @@ const styles = css`
 `
 
 export default function User({
-  id,
-  name,
-  surname,
-  age,
+  user,
   onRemove,
   onEdit
 }) {
 
   return (
-    <div css={styles} id={id}>
+    <div css={styles} id={user._id}>
       <div className='controls'>
-        <div className='id'><p>ID: {id}</p></div>
+        <div className='id'><p>ID: {user._id}</p></div>
         <div className='icons'>
           <div onClick={onEdit}>
             <FontAwesomeIcon icon={faPenToSquare} />
@@ -96,9 +93,9 @@ export default function User({
       </div>
       <div className='userInfo'>
         <div className='userData'>
-          <p><span>Name: </span>{name}</p>
-          <p><span>Surname: </span>{surname}</p>
-          <p><span>Age: </span>{age}</p>
+          <p><span>Name: </span>{user.name}</p>
+          <p><span>Surname: </span>{user.surname}</p>
+          <p><span>Age: </span>{user.age}</p>
         </div>
         <div className='userAvatar'>IMAGE</div>
       </div>

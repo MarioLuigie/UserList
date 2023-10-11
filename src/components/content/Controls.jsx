@@ -29,8 +29,8 @@ export default function Controls() {
 
   const handleDeleteConfirmAll = async () => {
     setDataStatus("PENDING");
-    await deleteAll(userListDispatch);
-    setDataStatus("SUCCESS");
+    const isStatusOk = await deleteAll(userListDispatch);
+    isStatusOk ? setDataStatus("SUCCESS") : setDataStatus("ERROR")
     handleCancelModal();
   }
 
