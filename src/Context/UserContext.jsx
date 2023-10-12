@@ -31,11 +31,11 @@ export default function UserProvider({ children }) {
       case CREATE:
         return [...userList, action.data];
       case READ:
-        return action.users;
+        return action.data;
       case UPDATE:
         return userList.map(user => (
-          user._id === action.user._id 
-            ? {...user, ...action.user}
+          user._id === action.data._id 
+            ? {...user, ...action.data}
             : user
         ));
       case DELETE_SELECTED:

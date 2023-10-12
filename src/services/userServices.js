@@ -12,31 +12,25 @@ export const createUser = async (newUser) => {
 
 //Read users fetch
 export const readUsers = async () => {
-  const res = await fetch(url);
-  return res;
+  const data = await axios.get(url);
+  return data;
 }
 
 //Update selected user fetch
 export const updateUser = async (formData, editingUser) => {
-  const res = await fetch(urlEditingId(editingUser._id), {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData)
-  });
-  return res;
+  const data = await axios.patch(urlEditingId(editingUser._id), formData);
+  return data;
 }
 
 //Delete selected user fetch
 export const deleteUser = async (id) => {
-  const res = await fetch(urlSelectedId(id), {method: "DELETE"});
-  return res;
+  const data = await axios.delete(urlSelectedId(id));
+  return data;
 }
 
 //Delete all users fetch
 export const deleteAll = async () => {
-  const res = await fetch(url, {method: "DELETE"});
-  return res;
+  const data = await axios.delete(url);
+  return data;
 }
 

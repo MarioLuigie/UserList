@@ -18,15 +18,9 @@ export const createUser = async (newUser, dispatch) => {
 //Read users from the server
 export const readUser = async (dispatch) => {
   try {
-    const res = await services.readUsers();
+    const { data } = await services.readUsers();
 
-    if(!res.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const users = await res.json();
-
-    dispatch({type: action.READ, users});
+    dispatch({type: action.READ, data});
 
   } catch (error) {
     console.error("Network response was not ok", error);
@@ -36,15 +30,9 @@ export const readUser = async (dispatch) => {
 //Update selected user and send to the server
 export const updateUser = async (formData, dispatch, editingUser) => {
   try {
-    const res = await services.updateUser(formData, editingUser);
+    const { data } = await services.updateUser(formData, editingUser);
 
-    if(!res.ok) {
-      throw new Error("Failed to update user.");
-    }
-  
-    const user = await res.json();
-    
-    dispatch({type: action.UPDATE, user});
+    dispatch({type: action.UPDATE, data});
 
     return null;
 
@@ -57,11 +45,7 @@ export const updateUser = async (formData, dispatch, editingUser) => {
 //Delete selected user and update server
 export const deleteUser = async (selectedId, dispatch) => {
   try {
-    const res = await services.deleteUser(selectedId);
-
-    if(!res.ok) {
-      throw new Error("Failed to remove selected user");
-    }
+    await services.deleteUser(selectedId);
 
     dispatch({type: action.DELETE_SELECTED, selectedId});
     return null;
@@ -75,14 +59,9 @@ export const deleteUser = async (selectedId, dispatch) => {
 //Delete all users and update server
 export const deleteAll = async (dispatch) => {
   try {
-    const res = await services.deleteAll();
-
-    if(!res.ok) {
-      throw new Error("Failed to delete users.");
-    }
+    await services.deleteAll();
 
     dispatch({type: action.DELETE_ALL});
-
     return null;
 
   } catch (error) {
