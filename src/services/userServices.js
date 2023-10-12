@@ -1,17 +1,13 @@
+import axios from "axios";
+
 const url = "https://places-arw.vercel.app/api/people";
 const urlSelectedId = selectedId => `${url}/${selectedId}`;
 const urlEditingId = editingId => `${url}/${editingId}`;
 
 //Crate user fetch
 export const createUser = async (newUser) => {
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newUser)
-  });
-  return res;
+  const data = await axios.post(url, newUser);
+  return data;
 }
 
 //Read users fetch
@@ -43,3 +39,4 @@ export const deleteAll = async () => {
   const res = await fetch(url, {method: "DELETE"});
   return res;
 }
+

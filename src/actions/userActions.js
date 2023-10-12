@@ -4,14 +4,9 @@ import { actionTypes as action } from "../constans/actionTypes";
 //Create user and send to the server
 export const createUser = async (newUser, dispatch) => {
   try {
-    const res = await services.createUser(newUser);
+    const { data } = await services.createUser(newUser);
 
-    if(!res.ok) {
-      throw new Error("Failed to add user.");
-    }
-
-    const user = await res.json();
-    dispatch({ type: action.CREATE, user });
+    dispatch({ type: action.CREATE, data });
     return null;
 
   } catch (error) {

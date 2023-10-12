@@ -29,7 +29,7 @@ export default function UserProvider({ children }) {
 
     switch(action.type) {
       case CREATE:
-        return [...userList, action.user];
+        return [...userList, action.data];
       case READ:
         return action.users;
       case UPDATE:
