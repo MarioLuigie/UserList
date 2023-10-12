@@ -88,7 +88,7 @@ export default function UserInput() {
   //send response user to reducer, reset form state, reset editing user state
   const handleUpdateSelected = async () => {
     setDataStatus({status: "PENDING"});
-    const isError = await updateUser(formData, userListDispatch, editingUser);
+    const isError = await updateUser(formData, userListDispatch, editingUser._id);
 
     isError 
       ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})

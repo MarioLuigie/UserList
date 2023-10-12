@@ -28,12 +28,11 @@ export const readUser = async (dispatch) => {
 }
 
 //Update selected user and send to the server
-export const updateUser = async (formData, dispatch, editingUser) => {
+export const updateUser = async (formData, dispatch, id) => {
   try {
-    const { data } = await services.updateUser(formData, editingUser);
+    const { data } = await services.updateUser(formData, id);
 
     dispatch({type: action.UPDATE, data});
-
     return null;
 
   } catch (error) {
