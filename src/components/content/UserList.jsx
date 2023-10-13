@@ -62,6 +62,10 @@ export default function UserList() {
     setIsModalOpen(false);
   }
 
+  const handleDisplayUser = () => {
+    console.log("User displayed");
+  }
+
   return (
     <>
       <div css={styles}>
@@ -72,6 +76,7 @@ export default function UserList() {
               user={user}
               onRemove={handleDeleteSelected(user._id)}
               onEdit={handleEditSelected(user)}
+              onDisplay={handleDisplayUser}
             />
             )) : (<p>No Results...</p>)}
       </div>

@@ -7,7 +7,7 @@ const peopleAxios = axios.create({baseURL: url});
 //Crate user fetch
 export const createUser = async (newUser) => {
   const data = await peopleAxios.post("/", newUser);
-   data;
+  return data;
 }
 
 //Read users fetch

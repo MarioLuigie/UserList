@@ -13,6 +13,9 @@ const styles = css`
   .title {
     font-size: 65px;
     color: #cecece;
+    background: linear-gradient(to right, #e20808, #c40e87);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
 
     span {
       font-weight: 100;

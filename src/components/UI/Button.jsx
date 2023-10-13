@@ -10,9 +10,10 @@ const styles = css`
     font-size: 1rem;
     border-radius: 6px;
     box-shadow: #0000008f 0 0 7px;
-    background-color: #eb2424;
+    /* background-color: #eb2424; */
     color: white;
     cursor: pointer;
+    background: linear-gradient(to right, #eb0740, #c40e87);
 
     &:hover {
       background-color: #ff1f1f;

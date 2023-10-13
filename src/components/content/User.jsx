@@ -1,8 +1,7 @@
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faUser, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 const styles = css`
   display: flex;
@@ -75,7 +74,8 @@ const styles = css`
 export default function User({
   user,
   onRemove,
-  onEdit
+  onEdit,
+  onDisplay
 }) {
 
   return (
@@ -83,6 +83,9 @@ export default function User({
       <div className='controls'>
         <div className='id'><p>ID: {user._id}</p></div>
         <div className='icons'>
+          <div onClick={onDisplay}>
+            <FontAwesomeIcon icon={faUser} />
+          </div>
           <div onClick={onEdit}>
             <FontAwesomeIcon icon={faPenToSquare} />
           </div>

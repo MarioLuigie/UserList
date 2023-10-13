@@ -1,5 +1,6 @@
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { container } from "../../constans/dimensions";
 import Header from "./Header";
@@ -23,9 +24,13 @@ export default function Container() {
   
   return (
     <div css={styles(width, minWidth, maxWidth)}>
-      <Header title="Your Places" />
-      <Main />
-      <Footer signature="ARWcode 2023" />
+      <Router>
+        <Header title="Your Places" />
+        <Routes>
+          <Route exact path={"/"} element={<Main />}/>
+        </Routes>
+        <Footer signature="ARWcode 2023" />
+      </Router>
     </div>
   )
 }

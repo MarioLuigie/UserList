@@ -5,7 +5,7 @@ import { actionTypes as action } from "../constans/actionTypes";
 export const createUser = async (newUser, dispatch) => {
   try {
     const { data } = await services.createUser(newUser);
-
+    console.log(data);
     dispatch({ type: action.CREATE, data });
     return null;
 
