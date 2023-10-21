@@ -1,4 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer, useState } from "react";
+import PropTypes from "prop-types";
 
 import { actionTypes } from "../constans/actionTypes";
 
@@ -64,4 +66,8 @@ export default function UserProvider({ children }) {
       {children}
     </UserContext.Provider>
   )
+}
+
+UserProvider.propTypes = {
+  children: PropTypes.node
 }
