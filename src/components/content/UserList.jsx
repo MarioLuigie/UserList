@@ -2,6 +2,7 @@
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import ModalPortal from '../Modals/ModalPortal';
 import Remove from '../Modals/Remove';
@@ -22,8 +23,8 @@ const styles = css`
 
 export default function UserList() {
   const { 
-    userList, 
-    userListDispatch, 
+    // userList, 
+    // userListDispatch, 
     setEditingUser, 
     setDataStatus,
     changeDataStatus 
@@ -31,9 +32,17 @@ export default function UserList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState("");
 
+  const userList = useSelector(store => store.userList);
+  const dispatch= useDispatch();
+
   //Set user on editingUser state 
   const handleEditSelected = (user) => () => {
     setEditingUser(user);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
   }
 
   //Open modal dialog to confirm delete selected user
@@ -46,7 +55,7 @@ export default function UserList() {
 
   const handleDeleteConfirmSelected = async () => {
     setDataStatus({status: "PENDING"});
-    const isError = await actions.deleteUser(selectedId, userListDispatch);
+    const isError = await actions.deleteUser(selectedId, dispatch);
     isError
       ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
       : changeDataStatus({status: "SUCCESS"});

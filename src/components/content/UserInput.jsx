@@ -2,6 +2,7 @@
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
 
 import { useUserContext } from '../../Context/UserContext';
 import { useState } from 'react';
@@ -38,7 +39,7 @@ export default function UserInput() {
   }
 
   const { 
-    userListDispatch, 
+    // userListDispatch, 
     editingUser, 
     setEditingUser,
     setDataStatus,
@@ -46,6 +47,8 @@ export default function UserInput() {
   } = useUserContext();
 
   const [formData, setFormData] = useState(initFormData);
+
+  const dispatch = useDispatch();
 
   //Reset form state with all inputs and editingUser state
   const handleCancel= () => {
@@ -68,7 +71,7 @@ export default function UserInput() {
 
     setDataStatus({status: "PENDING"});
 
-    const isError = await createUser(newUser, userListDispatch);
+    const isError = await createUser(newUser, dispatch);
     isError 
       ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
       : changeDataStatus({status: "SUCCESS"});
@@ -89,7 +92,7 @@ export default function UserInput() {
   //send response user to reducer, reset form state, reset editing user state
   const handleUpdateSelected = async () => {
     setDataStatus({status: "PENDING"});
-    const isError = await updateUser(formData, userListDispatch, editingUser._id);
+    const isError = await updateUser(formData, dispatch, editingUser._id);
 
     isError 
       ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
@@ -98,7 +101,7 @@ export default function UserInput() {
     setFormData(initFormData);
     setEditingUser(null);//Turn off update mode
   }
-
+  
   return (
     <div css={styles}>
       <Input 

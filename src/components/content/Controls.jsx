@@ -1,6 +1,8 @@
+/* eslint-disable react/no-unknown-property */
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useUserContext } from '../../Context/UserContext';
 import ModalPortal from '../Modals/ModalPortal';
@@ -17,12 +19,15 @@ const styles = css`
 
 export default function Controls() {
   const { 
-    userList, 
-    userListDispatch, 
+    // userList, 
+    // userListDispatch, 
     setDataStatus,
     changeDataStatus 
   } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const userList = useSelector(store => store.userList);
+  const dispatch = useDispatch();
 
   const handleCancelModal = () => {
     setIsModalOpen(false);
@@ -34,7 +39,7 @@ export default function Controls() {
 
   const handleDeleteConfirmAll = async () => {
     setDataStatus({status: "PENDING"});
-    const isError = await deleteAll(userListDispatch);
+    const isError = await deleteAll(dispatch);
     isError 
       ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
       : changeDataStatus({status: "SUCCESS"});

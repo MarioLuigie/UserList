@@ -4,7 +4,7 @@
 import { css } from '@emotion/react';
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useUserContext } from '../../Context/UserContext';
+import { useDispatch } from 'react-redux';
 
 import * as actions from '../../actions/userActions';
 import { container } from "../../constans/dimensions";
@@ -28,12 +28,12 @@ const styles = (width, minWidth, maxWidth) => css`
 export default function Container() {
   const { width, minWidth, maxWidth } = container;
 
-  const { userListDispatch } = useUserContext();
+  const dispatch = useDispatch();
 
   //Automatic fetch datas from server white first render component
   useEffect(() => async () => {
-    console.log("useEffect");
-    await actions.readUser(userListDispatch);
+    console.log("useEffect - datas readed");
+    await actions.readUser(dispatch);
   }, []); 
   
   return (

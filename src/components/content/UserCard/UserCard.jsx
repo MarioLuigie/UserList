@@ -2,8 +2,8 @@
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 
-import { useUserContext } from '../../../Context/UserContext';
 import UserCardHeader from "./UserCardHeader";
 import UserCardMain from "./UserCardMain/UserCardMain";
 import { header, footer } from "../../../constans/dimensions";
@@ -15,7 +15,8 @@ const styles = css`
 
 export default function UserCard() {
   const params = useParams();
-  const { userList } = useUserContext();
+
+  const userList = useSelector(store => store.userList);
 
   const user = userList.find(user => user._id === params.id);
 
