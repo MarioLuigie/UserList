@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unknown-property */
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import PropTypes from "prop-types";
 
 const styles = css`
   display: flex;
@@ -58,4 +60,14 @@ export default function Input({
       />
     </div>
   )
+}
+
+Input.propTypes = {
+  id: PropTypes.string,
+  label: PropTypes.string ,
+  name: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func
 }

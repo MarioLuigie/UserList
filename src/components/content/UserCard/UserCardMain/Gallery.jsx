@@ -2,24 +2,25 @@
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import Container from "./layout/Container";
-import DataStatusLabel from './Modals/DataStatusLabel';
-
 const styles = css`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  /* background-color: green; */
+
+  .example {
+
+  }
 `
 
-export default function App() {
-
+export default function Gallery() {
+  console.log("Gallery Mariusz");
+  
   return (
     <div css={styles}>
-      <Container />
-      <DataStatusLabel />
+      gallery
     </div>
   )
 }
-
-
-
-

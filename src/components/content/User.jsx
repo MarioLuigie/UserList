@@ -1,7 +1,10 @@
+/* eslint-disable react/no-unknown-property */
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faUser, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const styles = css`
   display: flex;
@@ -75,7 +78,6 @@ export default function User({
   user,
   onRemove,
   onEdit,
-  onDisplay
 }) {
 
   return (
@@ -83,9 +85,9 @@ export default function User({
       <div className='controls'>
         <div className='id'><p>ID: {user._id}</p></div>
         <div className='icons'>
-          <div onClick={onDisplay}>
+          <Link to={`/user/${user._id}/about`}>
             <FontAwesomeIcon icon={faUser} />
-          </div>
+          </Link>
           <div onClick={onEdit}>
             <FontAwesomeIcon icon={faPenToSquare} />
           </div>
@@ -104,4 +106,10 @@ export default function User({
       </div>
     </div>
   )
+}
+
+User.propTypes = {
+  user: PropTypes.object,
+  onRemove: PropTypes.func,
+  onEdit: PropTypes.func,
 }

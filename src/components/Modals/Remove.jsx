@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unknown-property */
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import PropTypes from "prop-types";
 
 import Button from "../UI/Button";
 
@@ -35,4 +37,10 @@ export default function Remove({
       </div>
     </div>
   )
+}
+
+Remove.propTypes = {
+  title: PropTypes.string,
+  onRemove: PropTypes.func,
+  onCancel: PropTypes.func
 }

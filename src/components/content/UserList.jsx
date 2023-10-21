@@ -1,6 +1,7 @@
+/* eslint-disable react/no-unknown-property */
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import ModalPortal from '../Modals/ModalPortal';
 import Remove from '../Modals/Remove';
@@ -30,11 +31,6 @@ export default function UserList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState("");
 
-  //Automatic fetch datas from server white first render component
-  useEffect(() => async () => {
-    await actions.readUser(userListDispatch);
-  }, []); 
-
   //Set user on editingUser state 
   const handleEditSelected = (user) => () => {
     setEditingUser(user);
@@ -62,8 +58,8 @@ export default function UserList() {
     setIsModalOpen(false);
   }
 
-  const handleDisplayUser = () => {
-    console.log("User displayed");
+  const handleDisplayUser = (user) => () => {
+    console.log("User displayed", user._id);
   }
 
   return (
@@ -76,7 +72,7 @@ export default function UserList() {
               user={user}
               onRemove={handleDeleteSelected(user._id)}
               onEdit={handleEditSelected(user)}
-              onDisplay={handleDisplayUser}
+              onDisplay={handleDisplayUser(user)}
             />
             )) : (<p>No Results...</p>)}
       </div>

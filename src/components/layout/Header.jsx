@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unknown-property */
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import PropTypes from "prop-types";
 
 import { header } from "../../constans/dimensions";
 
@@ -32,4 +34,8 @@ export default function Header({
       <h1 className='title'>{title}<span>&reg;</span></h1>
     </div>
   )
+}
+
+Header.propTypes = {
+  title: PropTypes.string
 }

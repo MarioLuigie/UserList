@@ -1,10 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/no-unknown-property */
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useUserContext } from '../../Context/UserContext';
 
+import * as actions from '../../actions/userActions';
 import { container } from "../../constans/dimensions";
 import Header from "./Header";
 import Main from "./Main";
+import UserCard from "../content/UserCard/UserCard";
 import Footer from "./Footer";
 
 const styles = (width, minWidth, maxWidth) => css`
@@ -21,6 +27,14 @@ const styles = (width, minWidth, maxWidth) => css`
 
 export default function Container() {
   const { width, minWidth, maxWidth } = container;
+
+  const { userListDispatch } = useUserContext();
+
+  //Automatic fetch datas from server white first render component
+  useEffect(() => async () => {
+    console.log("useEffect");
+    await actions.readUser(userListDispatch);
+  }, []); 
   
   return (
     <div css={styles(width, minWidth, maxWidth)}>
@@ -28,6 +42,7 @@ export default function Container() {
         <Header title="Your Places" />
         <Routes>
           <Route exact path={"/"} element={<Main />}/>
+          <Route path={"/user/:id/*"} element={<UserCard />}/>
         </Routes>
         <Footer signature="ARWcode 2023" />
       </Router>

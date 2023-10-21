@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -107,6 +108,7 @@ export default function DataStatusLabel() {
 
         return () => clearTimeout(timeout);
       }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataStatus]);
 
   //Setting the properties of the data object depending on the dataStatus

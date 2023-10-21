@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unknown-property */
 // /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import PropTypes from "prop-types";
 
 const styles = css`
 
@@ -35,4 +37,9 @@ export default function Button({
       <button className='button' onClick={onHandle}>{label}</button>
     </div>
   )
+}
+
+Button.propTypes = {
+  label: PropTypes.string,
+  onHandle: PropTypes.func
 }
