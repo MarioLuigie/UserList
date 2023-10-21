@@ -31,9 +31,9 @@ export default function Container() {
   const dispatch = useDispatch();
 
   //Automatic fetch datas from server white first render component
-  useEffect(() => async () => {
+  useEffect(() => {
     console.log("useEffect - datas readed");
-    await actions.readUser(dispatch);
+    dispatch(actions.readUser());
   }, []); 
   
   return (

@@ -16,7 +16,7 @@ export const createUser = async (newUser, dispatch) => {
 }
 
 //Read users from the server
-export const readUser = async (dispatch) => {
+export const readUser = () => async (dispatch) => {
   try {
     const { data } = await services.readUsers();
 
