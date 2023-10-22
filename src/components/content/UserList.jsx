@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import * as actions from '../../actions/userActions';
+import * as actions from '../../Redux/actions/userActions';
 import ModalPortal from '../Modals/ModalPortal';
 import Remove from '../Modals/Remove';
 import { useUserContext } from '../../Context/UserContext';
@@ -51,7 +51,7 @@ export default function UserList() {
     console.log(id);
   }
 
-  const handleDeleteConfirmSelected = async () => {
+  const handleDeleteConfirmSelected = () => {
     setDataStatus({status: "PENDING"});
 
     dispatch(actions.deleteUser(selectedId))

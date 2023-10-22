@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import * as actions from '../../actions/userActions';
+import * as actions from '../../Redux/actions/userActions';
 import { container } from "../../constans/dimensions";
 import Header from "./Header";
 import Main from "./Main";

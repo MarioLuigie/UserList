@@ -1,5 +1,5 @@
 import * as services from "../services/userServices";
-import { actionTypes as action } from "../constans/actionTypes";
+import { actionTypes as action } from "../../constans/actionTypes";
 
 //Create user and send to the server
 export const createUser = (newUser) => async (dispatch) => {

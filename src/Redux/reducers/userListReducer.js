@@ -1,4 +1,4 @@
-import { actionTypes } from "../constans/actionTypes";
+import { actionTypes } from "../../constans/actionTypes";
 
 const {
   CREATE, 
