@@ -2,7 +2,7 @@ import * as services from "../services/userServices";
 import { actionTypes as action } from "../constans/actionTypes";
 
 //Create user and send to the server
-export const createUser = async (newUser, dispatch) => {
+export const createUser = (newUser) => async (dispatch) => {
   try {
     const { data } = await services.createUser(newUser);
     console.log(data);
@@ -28,7 +28,7 @@ export const readUser = () => async (dispatch) => {
 }
 
 //Update selected user and send to the server
-export const updateUser = async (formData, dispatch, id) => {
+export const updateUser = (formData, id) => async (dispatch) => {
   try {
     const { data } = await services.updateUser(formData, id);
 
@@ -42,7 +42,7 @@ export const updateUser = async (formData, dispatch, id) => {
 }
 
 //Delete selected user and update server
-export const deleteUser = async (selectedId, dispatch) => {
+export const deleteUser = (selectedId) => async (dispatch) => {
   try {
     await services.deleteUser(selectedId);
 
@@ -56,7 +56,7 @@ export const deleteUser = async (selectedId, dispatch) => {
 }
 
 //Delete all users and update server
-export const deleteAll = async (dispatch) => {
+export const deleteAll = () => async (dispatch) => {
   try {
     await services.deleteAll();
 

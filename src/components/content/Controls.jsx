@@ -4,11 +4,11 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import * as actions from "../../actions/userActions";
 import { useUserContext } from '../../Context/UserContext';
 import ModalPortal from '../Modals/ModalPortal';
 import Remove from '../Modals/Remove';
 import Button from "../UI/Button";
-import { deleteAll } from "../../actions/userActions";
 
 const styles = css`
   width: 100%;
@@ -19,8 +19,6 @@ const styles = css`
 
 export default function Controls() {
   const { 
-    // userList, 
-    // userListDispatch, 
     setDataStatus,
     changeDataStatus 
   } = useUserContext();
@@ -37,12 +35,16 @@ export default function Controls() {
     setIsModalOpen(true);
   }
 
-  const handleDeleteConfirmAll = async () => {
+  const handleDeleteConfirmAll = () => {
     setDataStatus({status: "PENDING"});
-    const isError = await deleteAll(dispatch);
-    isError 
+
+    dispatch(actions.deleteAll())
+    .then((isError) => {
+      isError 
       ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
       : changeDataStatus({status: "SUCCESS"});
+    })
+
     handleCancelModal();
   }
 

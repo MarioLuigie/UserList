@@ -10,8 +10,8 @@ import * as actions from '../../actions/userActions';
 import { container } from "../../constans/dimensions";
 import Header from "./Header";
 import Main from "./Main";
-import UserCard from "../content/UserCard/UserCard";
 import Footer from "./Footer";
+import UserCard from "../content/UserCard/UserCard";
 
 const styles = (width, minWidth, maxWidth) => css`
   width: ${width}%;

@@ -4,12 +4,11 @@ import { css } from '@emotion/react';
 import { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 
+import * as actions from "../../actions/userActions";
 import { useUserContext } from '../../Context/UserContext';
 import { useState } from 'react';
-import { createUser } from "../../actions/userActions";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
-import { updateUser } from '../../actions/userActions';
 
 const styles = css`
   width: 100%;
@@ -39,7 +38,6 @@ export default function UserInput() {
   }
 
   const { 
-    // userListDispatch, 
     editingUser, 
     setEditingUser,
     setDataStatus,
@@ -65,17 +63,18 @@ export default function UserInput() {
   }
 
   //Create a new user and send on server, fetch from server and send to reducer
-  const handleCreateUser = async () => {
+  const handleCreateUser = () => {
     const { name, surname, age } = formData;
     const newUser = { name, surname, age };
 
     setDataStatus({status: "PENDING"});
 
-    const isError = await createUser(newUser, dispatch);
-    isError 
+    dispatch(actions.createUser(newUser))
+    .then((isError) => {
+      isError
       ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
       : changeDataStatus({status: "SUCCESS"});
-
+    })
     setFormData(initFormData);
   }
 
@@ -90,13 +89,15 @@ export default function UserInput() {
 
   //Send edited user (actual form) to server, fetch response with updateted user
   //send response user to reducer, reset form state, reset editing user state
-  const handleUpdateSelected = async () => {
+  const handleUpdateSelected = () => {
     setDataStatus({status: "PENDING"});
-    const isError = await updateUser(formData, dispatch, editingUser._id);
 
-    isError 
+    dispatch(actions.updateUser(formData, editingUser._id))
+    .then((isError) => {
+      isError 
       ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
       : changeDataStatus({status: "SUCCESS"});
+    })
 
     setFormData(initFormData);
     setEditingUser(null);//Turn off update mode
