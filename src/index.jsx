@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from "react-redux";
-import store from './store/Store';
+import store from './Redux/store/Store';
 
 import ContextProvider from "./Context/UserContext";
 import App from './components/App';

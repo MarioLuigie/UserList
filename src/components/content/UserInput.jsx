@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 
-import * as actions from "../../actions/userActions";
+import * as actions from "../../Redux/actions/userActions";
 import { useUserContext } from '../../Context/UserContext';
 import { useState } from 'react';
 import Button from "../UI/Button";
