@@ -17,7 +17,7 @@ const styles = css`
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  border-bottom: #afafaf solid 1px;
+  border-bottom: #b4b4b4 solid 1px;
 
   .buttons {
     display: flex;
