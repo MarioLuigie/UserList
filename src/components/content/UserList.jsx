@@ -85,7 +85,7 @@ export default function UserList() {
               onEdit={handleEditSelected(user)}
               onDisplay={handleDisplayUser(user)}
             />
-            )) : (<p>No Results...</p>)}
+            )) : (<p>is loading...</p>)}
       </div>
       {isModalOpen && 
         <ModalPortal>

@@ -75,6 +75,7 @@ export default function UserInput() {
       ? changeDataStatus({status: "ERROR", msg: isError, isAutoHide: false})
       : changeDataStatus({status: "SUCCESS"});
     })
+    
     setFormData(initFormData);
   }
 
